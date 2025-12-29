@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Time Table | Smart Travel</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* 1. Body ko Flexbox banaya taaki footer hamesha niche rahe */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
+                              url('Images/Bus.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh; /* Puri screen ki height */
+            color: #fff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ASP.NET form wrapper ko flex dein */
+        #ctl01 {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .headerbkg {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px) saturate(150%);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+/* Logo Styling - Fixed & Clean */
+.headerimg {
+    height: 70px;          /* Aap is height ko 60px ya 80px kar sakte hain requirement ke hisaab se */
+    width: auto;           /* Aspect ratio sahi rakhne ke liye */
+    display: block;
+    object-fit: contain;   /* Image khinchegi nahi */
+    transition: transform 0.3s ease;
+    /* Agar logo ke piche white box aa raha hai aur aapko transparent chahiye toh filter hata sakte hain */
+   filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
+   border-radius: 6px;
+}
+
+/* Logo container spacing */
+.logo-area {
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Hover karne par halka sa effect (optional) */
+.headerimg:hover {
+    transform: scale(1.02);
+}
+        .headerimg {
+            height: 70px;
+            width: auto;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
+            border-radius: 6px;
+        }
+
+        .headerlable {
+            font-size: 2rem;
+            font-weight: 800 !important;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            margin: 0;
+            display: inline-block;
+            position: relative;
+        }
+
+        .headerlable::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: #ffca2c;
+            margin: 5px auto 0;
+            border-radius: 10px;
+        }
+
+        .main-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            color: #333;
+            margin-top: 80px; /* Thoda space kam kiya header se */
+        }
+
+        .btn-primary-custom {
+            background-color: #0d6efd;
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: 0.3s;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+        }
+
+        /* Glass Table Styling */
+        #MainContent_grdbustimetable {
+            width: 100% !important;
+            border-collapse: separate !important;
+            border-spacing: 0 10px !important;
+            border: none !important;
+            background: transparent !important;
+        }
+
+        #MainContent_grdbustimetable tr:first-child td {
+            background: rgb(35 131 67) !important;
+            color: white !important;
+            padding: 15px !important;
+            font-weight: bold;
+            border-radius: 10px;
+            border: none !important;
+        }
+
+        #MainContent_grdbustimetable tr:not(:first-child) {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        #MainContent_grdbustimetable td {
+            padding: 18px 15px !important;
+            border: none !important;
+            color: #222 !important;
+            vertical-align: middle;
+        }
+
+        /* 2. Footer Styling - Bottom fixing logic */
+        footer {
+            margin-top: auto; /* Ye footer ko sabse niche push karega */
+            padding: 20px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.2); /* Halka background footer ke liye */
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .headerlable { font-size: 1.2rem; letter-spacing: 1px; }
+            .headerimg { height: 45px; }
+            .main-card { margin-top: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="./" id="ctl01">
+        <div class="container-fluid headerbkg">
+            <div class="container d-flex align-items-center justify-content-between">
+                <div class="logo-area">
+                    <img id="imglogo" class="headerimg" src="Images/logo.png" alt="Logo" />
+                </div>
+                <div class="text-center flex-grow-1">
+                    <h1 id="lblheader" class="headerlable">Bus Time Table</h1>
+                </div>
+                <div class="d-none d-md-block" style="width: 80px;"></div> 
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="main-card" id="MainContent_pnlsearch">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Bus From</label>
+                                <select name="ctl00$MainContent$ddlbusfrom" id="MainContent_ddlbusfrom" class="form-select shadow-sm">
+                                    <option>Select Origin</option>
+                                    <option>IFFCO</option>
+                                    <option>AHMEDABAD</option>
+                                    <option>GANDHINAGAR</option>
+                                    <option>BOPAL</option>
+                                    <option>TOWNSHIP</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Bus To</label>
+                                <select name="ctl00$MainContent$ddlbusto" id="MainContent_ddlbusto" class="form-select shadow-sm">
+                                    <option>Select Destination</option>
+                                    <option>IFFCO</option>
+                                    <option>AHMEDABAD</option>
+                                    <option>GANDHINAGAR</option>
+                                    <option>BOPAL</option>
+                                    <option>TOWNSHIP</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                <input type="submit" name="ctl00$MainContent$btnsearch" value="Search Schedule" id="MainContent_btnsearch" class="btn-primary-custom shadow-sm" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="MainContent_pnlgrid" class="mt-4">
+                        <div class="table-responsive">
+                            <table cellspacing="0" id="MainContent_grdbustimetable">
+                                <tr>
+                                    <td>No Bus Found for this Route.</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="mt-4 d-flex justify-content-center mb-4">
+                            <input type="submit" name="ctl00$MainContent$btnedit" value="Modify Search" id="MainContent_btnedit" class="btn btn-outline-light btn-sm px-4 rounded-pill" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <hr style="opacity: 0.1; margin-bottom: 10px;" />
+                <p class="mb-0">&copy; 2025 IFFCO, KALOL UNIT Smart Travel Portal | Digital Initiative</p>
+            </div>
+        </footer>
+    </form>
+
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+</body>
+</html>
